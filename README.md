@@ -1,4 +1,4 @@
 vtex-popup
 ==========
 
-Plugin para faciltar a criação de popups
+Plugin para faciltar a criação de popups.
