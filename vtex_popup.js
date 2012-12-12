@@ -5,11 +5,11 @@
     
         var _popup_settings = jQuery.extend({
             classes: null,
-            shade: '#000', // "shade" as in css background. It will accept image, color, etc.
-            background: '#fff', // "background" as in css background. It will accept image, color, etc.
-            title:null,
-            close: '.close', // Class for the close button.
-            textclose:'X',
+            //shade: '#000',      // "shade" as in css background. It will accept image, color, etc.
+            opacity:null,          // valor de opacidade do shade
+            title:null,         // título do popup (aceita html)
+            close: '.close',    // Class for the close button.
+            close_text:'X',     // texto do botão fechar
             callback: null
         }, _popup_options);
 
@@ -25,15 +25,15 @@
                 shade: function()
                 {
                     if(jQuery(".vtex-popup-shade").length>0) return;
-                    
-                    shade = jQuery("<div>").addClass("vtex-popup-shade").addClass(_popup_settings.close.split('.')[1]).css({"opacity":0.5,"display":"none",background:_popup_settings.shade});
+                    console.log(_popup_settings.opacity);
+                    shade = jQuery("<div>").addClass("vtex-popup-shade").addClass(_popup_settings.close.split('.')[1]).css({"opacity":_popup_settings.opacity,"display":"none"});
                     jQuery("body").prepend(shade);
                 },
                 popup: function()
                 {
                     if(jQuery(".vtex-popup").length>0) return;
                     
-                    div_wrapper = jQuery("<div>").addClass("vtex-popup").css({"display":"none",background:_popup_settings.background});
+                    div_wrapper = jQuery("<div>").addClass("vtex-popup").css("display","none");
 
                     if(_popup_settings.classes!=null)
                     {
@@ -51,18 +51,15 @@
                     div_content   = jQuery("<div>").addClass("popup-content");
                     div_container = jQuery("<div>").addClass("popup-container");
                     
-                    if(_popup_settings.title!=null){
-                        jQuery(div_header).append(jQuery("<div>").addClass("popup-title"));
-                        jQuery(div_header).find(".popup-title").append(jQuery("<span>").text(_popup_settings.title));
-                    }
-                    jQuery(btn_close).append(jQuery("<span>").text(_popup_settings.textclose));
+                    if(_popup_settings.title!=null)
+                        jQuery(div_header).append(jQuery("<div>").addClass("popup-title").html(_popup_settings.title));
 
+                    jQuery(btn_close).append(jQuery("<span>").text(_popup_settings.close_text));
                     jQuery(div_header).append(btn_close);
                     jQuery(div_container).append(div_header);
                     jQuery(div_container).append(div_content);
                     jQuery(div_wrapper).append(div_container);
                     jQuery("body").prepend(div_wrapper);
-                    console.log("chegou no fim");
                 },
                 events: function()
                 {
@@ -79,7 +76,7 @@
                     _popup_plugin.set.popup();
                     _popup_plugin.set.shade();
                     _popup_plugin.show.shade();
-                    jQuery(".vtex-popup").show();
+                    jQuery(".vtex-popup").fadeIn();
                     _selection_obj=jQuery(_popup_selection); //.clone();
                     jQuery(".popup-content").empty();
                     jQuery(".popup-content").html(_selection_obj);
@@ -90,15 +87,15 @@
                 },
                 shade: function()
                 {
-                    jQuery(".vtex-popup-shade").show();
+                    jQuery(".vtex-popup-shade").fadeIn();
                 }
             },
             close:
             {
                 popup: function()
                 {
-                    jQuery(".vtex-popup").remove();
-                    jQuery(".vtex-popup-shade").remove();
+                    jQuery(".vtex-popup").fadeOut().remove();
+                    jQuery(".vtex-popup-shade").fadeOut().remove();
                 }
             },
             check: function(e)
