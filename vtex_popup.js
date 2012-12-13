@@ -5,9 +5,9 @@
     
         var _popup_settings = jQuery.extend({
             classes: null,
-            //shade: '#000',      // "shade" as in css background. It will accept image, color, etc.
-            opacity:null,          // valor de opacidade do shade
-            title:null,         // título do popup (aceita html)
+            //shade: '#000',    // "shade" as in css background. It will accept image, color, etc.
+            opacity:null,       // valor de opacidade do shade
+            title:null,         // título do popup (suporta html)
             close: '.close',    // Class for the close button.
             close_text:'X',     // texto do botão fechar
             callback: null
@@ -25,7 +25,6 @@
                 shade: function()
                 {
                     if(jQuery(".vtex-popup-shade").length>0) return;
-                    console.log(_popup_settings.opacity);
                     shade = jQuery("<div>").addClass("vtex-popup-shade").addClass(_popup_settings.close.split('.')[1]).css({"opacity":_popup_settings.opacity,"display":"none"});
                     jQuery("body").prepend(shade);
                 },
@@ -47,7 +46,7 @@
                     }
 
                     div_header    = jQuery("<div>").addClass("popup-header");
-                    btn_close     = jQuery("<div>").addClass(_popup_settings.close.split('.')[1]);
+                    btn_close     = jQuery("<div>").addClass(_popup_settings.close.split('.')[1]).css('cursor','pointer');
                     div_content   = jQuery("<div>").addClass("popup-content");
                     div_container = jQuery("<div>").addClass("popup-container");
                     
@@ -94,14 +93,13 @@
             {
                 popup: function()
                 {
-                    jQuery(".vtex-popup").fadeOut().remove();
-                    jQuery(".vtex-popup-shade").fadeOut().remove();
+                    jQuery(".vtex-popup").fadeOut("fast", function(){ $(this).remove(); });
+                    jQuery(".vtex-popup-shade").fadeOut("fast", function(){ $(this).remove(); });
                 }
             },
             check: function(e)
             {
                 var result = false;
-                console.log(jQuery(e));
                 if(jQuery(e).length<=0) // This checks if the container is set. Otherwise, nothing will happen.
                 {
                     _popup_plugin.log("A container is required to build the menu.");
