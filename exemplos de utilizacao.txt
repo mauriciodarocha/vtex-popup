@@ -1,0 +1,18 @@
+var lista_gerenciar = function()
+{
+    if(!$("body").hasClass("lista-gerenciar")) return;
+
+    window.tb_show = function(caption,url,imageGroup){ 
+        jQuery.ajax({ 
+            url:url, 
+            success: function(data){ 
+                if(typeof data == "undefined") return;
+                jQuery(data).vtex_popup({title:'Enviar para amigos', close_text:'fechar [x]', classes:'.refer-a-friend'}); 
+            }
+        }); 
+    };
+
+    window.referAFriendButtonCallFormClick = function(url) {
+        this.ajaxReferAFriend('POST', url, null, '.popup-content', '');
+    } 
+}
