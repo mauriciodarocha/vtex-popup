@@ -66,6 +66,9 @@
                         // jQuery(this).addClass('active');
                         _popup_plugin.close.popup();
                     });
+                    jQuery(document).keyup(function(e) {
+                        if(e.keyCode == 27) { _popup_plugin.close.popup(); }
+                    });
                 }
             },
             show:
@@ -95,6 +98,7 @@
                 {
                     jQuery(".vtex-popup").fadeOut("fast", function(){ $(this).remove(); });
                     jQuery(".vtex-popup-shade").fadeOut("fast", function(){ $(this).remove(); });
+                    jQuery(document).unbind();
                 }
             },
             check: function(e)
