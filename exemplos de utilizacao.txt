@@ -16,3 +16,34 @@ var lista_gerenciar = function()
         this.ajaxReferAFriend('POST', url, null, '.popup-content', '');
     } 
 }
+
+// aplicando no quickview
+jQuery(".quickView").click(function(){
+    var _produto_id = jQuery(this).attr("produto_id");
+    var _iframe = jQuery("<iframe>",{src:"/quick-view/?idproduto="+_produto_id});
+    jQuery(_iframe).vtex_popup();
+})
+
+
+// css padrão
+.vtex-popup-shade {
+    background: none repeat scroll 0 0 #000000;
+    height: 100%;
+    left: 0;
+    opacity: 0.4;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3000;
+}
+.vtex-popup {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 2px solid #023373;
+    height: 155px;
+    left: 50%;
+    margin-left: -180px;
+    position: fixed;
+    top: 30%;
+    width: 360px;
+    z-index: 3002;
+}
