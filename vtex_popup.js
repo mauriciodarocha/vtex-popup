@@ -10,7 +10,8 @@
             title:null,         // título do popup (suporta html)
             close: '.close',    // Class for the close button.
             close_text:'X',     // texto do botão fechar
-            callback: null
+            callback: null,
+            unload: null
         }, _popup_options);
 
         var _popup_plugin = {
@@ -99,6 +100,9 @@
                     jQuery(".vtex-popup").fadeOut("fast", function(){ $(this).remove(); });
                     jQuery(".vtex-popup-shade").fadeOut("fast", function(){ $(this).remove(); });
                     jQuery(document).unbind();
+
+                    if(typeof _popup_settings.unload=="function")
+                        _popup_settings.unload();
                 }
             },
             check: function(e)
