@@ -1,17 +1,17 @@
 (function( $ ) {
     jQuery.fn.vtex_popup = function(_popup_options){
         
-        var _popup_selection = jQuery(this);
+        var _popup_selection = this;
     
         var _popup_settings = jQuery.extend({
             classes: null,
-            //shade: '#000',    // "shade" as in css background. It will accept image, color, etc.
             opacity:null,       // valor de opacidade do shade
             title:null,         // título do popup (suporta html)
             close: '.close',    // Class for the close button.
             close_text:'X',     // texto do botão fechar
             callback: null,
-            unload: null
+            unload: null,
+            shade: '#000'    // "shade" as in css background. It will accept image, color, etc.
         }, _popup_options);
 
         var _popup_plugin = {
@@ -25,8 +25,9 @@
             {
                 shade: function()
                 {
-                    if(jQuery(".vtex-popup-shade").length>0) return;
-                    shade = jQuery("<div>").addClass("vtex-popup-shade").addClass(_popup_settings.close.split('.')[1]).css({"opacity":_popup_settings.opacity,"display":"none"});
+                    if(jQuery(".vtex-popup-shade").length>0) return false;
+
+                    shade = jQuery("<div>").addClass("vtex-popup-shade").addClass(_popup_settings.close.split('.')[1]).css({"opacity":_popup_settings.opacity,"display":"none","background":_popup_settings.shade});
                     jQuery("body").prepend(shade);
                 },
                 popup: function()
@@ -87,6 +88,8 @@
                     
                     if(typeof _popup_settings.callback=="function")
                         _popup_settings.callback();
+
+                    return true;
                 },
                 shade: function()
                 {
@@ -105,26 +108,21 @@
                         _popup_settings.unload();
                 }
             },
-            check: function(e)
+            check: function()
             {
-                var result = false;
-                if(jQuery(e).length<=0) // This checks if the container is set. Otherwise, nothing will happen.
-                {
-                    _popup_plugin.log("A container is required to build the menu.");
-                    result = false;
-                    return result;
-                } 
+                var exists = _popup_selection.length;
+
+                if(!exists) // This checks if the container is set. Otherwise, nothing will happen.
+                    _popup_plugin.log("A container is required to build the popup.");
                 
-                _popup_selection = e;
-                result = true;
-                
-                return result;
+                return exists;
             },
             log: function(log)
             {
-                if(typeof console=="undefined") return;
+                if(typeof console=="undefined") return false;
                 
                 console.log(log);
+                return true;
             }
         }
 
