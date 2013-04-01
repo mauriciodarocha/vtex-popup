@@ -1,4 +1,4 @@
-;(function (jQuery, window, document) {
+;(function (jQuery,window,document,undefined) {
   jQuery.fn.vtex_popup = function (_popup_options) {
 
     var _popup_selection = this;
@@ -134,4 +134,4 @@
 
     return _popup_plugin.init();
   }
-})(jQuery, window, document, undefined);
+})(jQuery,window,document);
